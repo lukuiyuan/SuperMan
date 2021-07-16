@@ -1,25 +1,3 @@
-/*
-
- JS Beautifier
----------------
-  $Date: 2008-06-10 14:49:11 +0300 (Tue, 10 Jun 2008) $
-  $Revision: 60 $
-
-
-  Written by Einars "elfz" Lielmanis, <elfz@laacz.lv> 
-      http://elfz.laacz.lv/beautify/
-
-  Originally converted to javascript by Vital, <vital76@gmail.com> 
-      http://my.opera.com/Vital/blog/2007/11/21/javascript-beautify-on-javascript-translated
-
-
-  You are free to use this in any way you want, in case you find this useful or working for you.
-
-  Usage:
-    js_beautify(js_source_text);
-
-*/
-
 
 function js_beautify(js_source_text, indent_size, indent_character, indent_level)
 {
