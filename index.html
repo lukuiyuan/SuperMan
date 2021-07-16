@@ -9,59 +9,10 @@
 	<link href="./bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./jquery-json-viewer/css/htmleaf-demo.css">
 	<link href="./jquery-json-viewer/css/jquery.json-viewer.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="./send.css">
 	<script type="text/javascript" src="./send.js"></script>
 	<style>
-		.contact_button {
-			display: block;
-			background: #aacf53;
-			/* 绿色 */
-			color: #fff;
-			border: solid 4px #aacf53;
-			/* 绿色 */
-			font-size: 1.4em;
-			border-radius: 5px;
-		}
-
-		.contact_button:hover {
-			background: #82ae46;
-			/* 绿色加浓 */
-			border: solid 4px #82ae46;
-			/* 绿色加浓 */
-		}
-
-		.contact_button:active {
-			background: #69821b;
-			/* 深绿色 */
-		}
-
-		receive {
-			outline: 1px solid #ccc;
-			padding: 5px;
-			margin: 5px;
-		}
-
-		.string {
-			color: green;
-		}
-
-		.number {
-			color: darkorange;
-		}
-
-		.boolean {
-			color: blue;
-		}
-
-		.null {
-			color: magenta;
-		}
-
-		.key {
-			color: red;
-		}
 	</style>
-
-
 </head>
 
 <body>
@@ -120,8 +71,8 @@
 					<input type="checkbox" id="with-quotes"> 为Key添加双引号
 				</label>
 				<div class="form-group" style="padding: 1em 0;">
-					<button id="btn-json-viewer" class="btn btn-info" title="run jsonViewer()">转换Json数据</button>
-					<button type="submit" name="submit_button" class="btn btn-info" onclick="clickSend()">发送</button>
+					<button id="btn-json-viewer" class="btn btn-info" title="run jsonViewer()">转换数据格式</button>
+					<button type="submit" name="submit_button" class="btn btn-info" onclick="clickSend()">发送数据</button>
 					<div id="receive"></div>
 				</div>
 				<!-- <textarea class="form-control" id="json-renderer" rows="15" ></textarea> -->
@@ -135,12 +86,18 @@
 		window.jQuery || document.write('<script src="./jquery-1.11.0.min.js"><\/script>')
 	</script>
 	<script src="./jquery.json-viewer.js"></script>
+	<script src="./jsbeautify.js"></script>
 	<script type="text/javascript">
 		$(function () {
 			$('#btn-json-viewer').click(function () {
 				praseJsonOnclick();
 				if (!isJSON(document.getElementById('json-input').value)) {
-					alert('格式不正确')
+					if(sendflag==false){
+						alert('格式不正确');
+						sendflag=true;
+						return;
+					}
+					do_js_beautify();
 					return;
 				}
 				try {
@@ -230,9 +187,11 @@
 		}
 
 		var flag = true;
+		var sendflag = true;
 		//   发送数据
 		function clickSend() {
 			flag = false;
+			sendflag = false; 
 			var sendData = document.getElementById('sendData').style.display
 
 			if (sendData == 'none') {
@@ -244,7 +203,9 @@
 			var URL = document.getElementById('URL').value;
 
 			let body = getBody();
+			sendflag=true;
 			if (body === '') {
+				
 				return;
 			}
 
@@ -271,6 +232,7 @@
 		function praseJson() {
 			$('#btn-json-viewer').click();
 		}
+
 	</script>
 
 

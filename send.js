@@ -93,3 +93,41 @@ function send(URL, SendData) {
 //   };
 //   return JSON.stringify(sendData);
 // }
+
+function syntaxHighlight(json) {
+  if (typeof json != 'string') {
+      json = JSON.stringify(json, undefined, 2);
+  }
+  json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+      var cls = 'number';
+      if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+              cls = 'key';
+          } else {
+              cls = 'string';
+          }
+      } else if (/true|false/.test(match)) {
+          cls = 'boolean';
+      } else if (/null/.test(match)) {
+          cls = 'null';
+      }
+      return '<span class="' + cls + '">' + match + '</span>';
+  });
+}
+
+function do_js_beautify() {
+  // $("#fjs").html("");
+var js_source =$('#json-input').val().replace(/^\s+/, '');
+if(js_source.length==0)
+return;
+  // var tabsize = $('#tabsize').val();
+  tabchar = ' ';
+  // if (tabsize == 1)
+  //   tabchar = '\t';
+var tabsize =4;
+  var fjs = js_beautify(js_source, tabsize, tabchar);
+// $("#json-renderer").val(fjs);
+$('#json-renderer').html(syntaxHighlight(fjs));
+// document.getElementById('json-renderer').innerText=fjs;
+}
